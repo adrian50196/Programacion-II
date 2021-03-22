@@ -1,0 +1,84 @@
+// UNA APLICACION QUE, MEDIANTE UN ARREGLO PERMITA:
+//GUARDAR MAS ELEMENTOS -INSERTAR
+//QUITAR ALGUNOS ELEMENTOS-ELIMINAR
+
+#include<iostream>
+
+using namespace std;
+int *INSERTAR(int*arreglo,int*n_elementos,int*dato) {
+	int*auxiliar = new int[*n_elementos];
+	for (int i = 0; i < *n_elementos; i++)
+		auxiliar[i] = arreglo[i];
+
+
+	arreglo = new int[*n_elementos + 1];//AUMENTO DE TAMAÑO DEL ARREGLO
+	for (int i = 0; i < *n_elementos; i++)//REGRESAMOS LOS ELEMENTOS AL ORIGINAL
+		arreglo[i] = auxiliar[i];
+	arreglo[*n_elementos] = *dato;//INSERTAMOS EL NUEVO ELEMENTO
+	*n_elementos = *n_elementos + 1;//AUMENTAMOS LA CANTIDAD DE ELEMENTOS QUE TIENE EL ARREGLO ORIGINAL
+
+	return arreglo;//EVITO QUE LOS RECURSOS SOLICITADOS SE PIERDAN
+}
+
+void IMPRIMIR(int*arreglo, int*n_elementos) {
+	for (int i = 0; i < *n_elementos; i++)
+		cout << arreglo[i] << endl;
+}
+
+int*ELIMINAR_EL_ULTIMO(int*arreglo, int*n_elementos) {
+	//GUARDAR LOS DATOS DE UNA VARIABLE ANTES DE CAMBIAR DE TAMAÑO AL ARREGLO.SE COPIA TODO MENOS EL ULTIMO
+	int*auxiliar = new int[*n_elementos-1];
+	for (int i = 0; i < *n_elementos; i++)
+		auxiliar[i] = arreglo[i];
+	*n_elementos = *n_elementos - 1;//ACTUALIZAR EL NUMERO DE ELEMENTOS
+	return auxiliar;
+}
+
+int*ELIMINAR_EL_PRIMERO(int*arreglo, int*n_elementos) {
+	//GUARDAR LOS DATOS DE UNA VARIABLE ANTES DE CAMBIAR DE TAMAÑO AL ARREGLO.SE COPIA TODO MENOS EL ULTIMO
+	int*auxiliar = new int[*n_elementos-1];
+	for (int i = 1; i < *n_elementos ; i++)
+		auxiliar[i-1] = arreglo[i];
+	*n_elementos = *n_elementos - 1;//ACTUALIZAR EL NUMERO DE ELEMENTOS
+	return auxiliar;
+}
+int main() {
+	int *arreglo;
+	int *n_elementos;
+	int *dato;
+	n_elementos = new int;
+	*n_elementos = 0;
+	int op;
+
+
+	do
+	{
+		cout << "1.INSERTAR:" << endl;
+		cout << "2.ELIMINAR EL PRIMERO:" << endl;
+		cout << "3.ELIMINAR EL ULTIMO:" << endl;
+		cout << "4.IMPRIMIR:" << endl;
+		cout << "5.SALIR" << endl;
+		cout << "INGRESE SU OPCION"<<endl;
+		cin >> op;
+		if (op==1)
+		{
+			//INSERTAR
+			cout << "Ingrese el numero a guardar";
+			cin >> *dato;
+			arreglo = INSERTAR(arreglo, n_elementos, dato);
+		}
+		if (op == 2) arreglo = ELIMINAR_EL_PRIMERO(arreglo, n_elementos);
+		if (op == 3)arreglo = ELIMINAR_EL_ULTIMO(arreglo, n_elementos);
+		if (op == 4)IMPRIMIR(arreglo, n_elementos);
+	} while (op !=5);
+	//INSERTAR
+	cout << "Ingrese el numero a guardar";
+	cin >> *dato;
+	arreglo=INSERTAR(arreglo, n_elementos, dato);
+	//ELIMINAR EL ULTIMO
+	arreglo = ELIMINAR_EL_ULTIMO(arreglo, n_elementos);
+
+
+
+	return  0;
+}
